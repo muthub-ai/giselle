@@ -43,17 +43,33 @@ export const githubCreatePullRequestCommentAction = {
 	},
 } as const satisfies GitHubActionBase;
 
+export const githubReplyPullRequestReviewCommentAction = {
+	provider,
+	command: {
+		id: "github.reply.pullRequestReviewComment",
+		label: "Reply Pull Request Review Comment",
+		parameters: z.object({
+			pullNumber: z.coerce.number(),
+			commentId: z.coerce.number(),
+			body: z.string(),
+		}),
+	},
+} as const satisfies GitHubActionBase;
+
 export const actions = {
 	[githubCreateIssueAction.command.id]: githubCreateIssueAction,
 	[githubCreateIssueCommentAction.command.id]: githubCreateIssueCommentAction,
 	[githubCreatePullRequestCommentAction.command.id]:
 		githubCreatePullRequestCommentAction,
+	[githubReplyPullRequestReviewCommentAction.command.id]:
+		githubReplyPullRequestReviewCommentAction,
 } as const;
 
 export type GitHubAction =
 	| typeof githubCreateIssueAction
 	| typeof githubCreateIssueCommentAction
-	| typeof githubCreatePullRequestCommentAction;
+	| typeof githubCreatePullRequestCommentAction
+	| typeof githubReplyPullRequestReviewCommentAction;
 
 export type ActionCommandId = keyof typeof actions;
 
@@ -65,6 +81,8 @@ export function actionIdToLabel(triggerId: ActionCommandId) {
 			return githubCreateIssueCommentAction.command.label;
 		case "github.create.pullRequestComment":
 			return githubCreatePullRequestCommentAction.command.label;
+		case "github.reply.pullRequestReviewComment":
+			return githubReplyPullRequestReviewCommentAction.command.label;
 		default: {
 			const exhaustiveCheck: never = triggerId;
 			throw new Error(`Unknown trigger ID: ${exhaustiveCheck}`);

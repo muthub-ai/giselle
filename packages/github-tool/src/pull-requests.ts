@@ -31,3 +31,34 @@ export async function getPullRequestDiff(args: {
 	);
 	return response.data as unknown as string;
 }
+
+export async function replyPullRequestReviewComment(args: {
+	repositoryNodeId: string;
+	pullNumber: number;
+	commentId: number;
+	body: string;
+	authConfig: GitHubAuthConfig;
+}) {
+	const client = octokit(args.authConfig);
+	const repo = await getRepositoryFullname(
+		args.repositoryNodeId,
+		args.authConfig,
+	);
+	if (repo.error || repo.data === undefined) {
+		throw new Error(`Failed to get repository information: ${repo.error}`);
+	}
+	if (repo.data.node?.__typename !== "Repository") {
+		throw new Error(`Invalid repository type: ${repo.data.node?.__typename}`);
+	}
+	const response = await client.request(
+		"POST /repos/{owner}/{repo}/pulls/{pull_number}/comments/{comment_id}/replies",
+		{
+			owner: repo.data.node.owner.login,
+			repo: repo.data.node.name,
+			pull_number: args.pullNumber,
+			comment_id: args.commentId,
+			body: args.body,
+		},
+	);
+	return response.data;
+}
