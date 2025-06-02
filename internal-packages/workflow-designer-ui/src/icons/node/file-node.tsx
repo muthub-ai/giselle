@@ -18,8 +18,6 @@ export function FileNodeIcon({
 			return <TextFileIcon {...props} />;
 		case "image":
 			return <PictureIcon {...props} />;
-		case "webPage":
-			return <WebPageFileIcon {...props} />;
 		default: {
 			const _exhaustiveCheck: never = node.content.category;
 			throw new Error(`Unhandled node type: ${_exhaustiveCheck}`);

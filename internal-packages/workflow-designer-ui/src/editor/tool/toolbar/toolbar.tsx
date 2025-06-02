@@ -82,6 +82,7 @@ import {
 	triggerNode,
 	useToolbar,
 	vectorStoreNode,
+	webPageNode,
 } from "./state";
 
 export function Toolbar() {
@@ -1001,12 +1002,6 @@ export function Toolbar() {
 													<TextFileIcon className="w-[20px] h-[20px]" />
 													<p className="text-[14px]">Text</p>
 												</ToggleGroup.Item>
-												{webPageFileNode && (
-													<ToggleGroup.Item value="webPage" data-tool>
-														<WebPageFileIcon className="w-[20px] h-[20px]" />
-														<p className="text-[14px]">Web Page</p>
-													</ToggleGroup.Item>
-												)}
 												{/* <ToggleGroup.Item value="addGitHubNode" data-tool>
 													<GitHubIcon className="w-[20px] h-[20px]" />
 													<p className="text-[14px]">GitHub</p>
@@ -1018,6 +1013,16 @@ export function Toolbar() {
 							</Popover.Root>
 						)}
 					</ToggleGroup.Item>
+					{webPageFileNode && (
+						<ToggleGroup.Item
+							value="webPageNode"
+							data-tool
+							onClick={() => setSelectedTool(addNodeTool(webPageNode()))}
+						>
+							<WebPageFileIcon className="w-[20px] h-[20px]" />
+							<p className="text-[14px]">Web Page</p>
+						</ToggleGroup.Item>
+					)}
 					<ToggleGroup.Item
 						value="agent"
 						data-tool

@@ -15,6 +15,7 @@ import type {
 	TriggerNode,
 	VectorStoreContent,
 	VectorStoreNode,
+	WebPageNode,
 } from "@giselle-sdk/data-type";
 import { NodeId, OutputId } from "@giselle-sdk/data-type";
 import type { ActionProvider, TriggerProvider } from "@giselle-sdk/flow";
@@ -315,4 +316,25 @@ export function vectorStoreNode(
 			},
 		],
 	};
+}
+
+export function webPageNode() {
+	return {
+		id: NodeId.generate(),
+		type: "variable",
+		content: {
+			type: "webPage",
+			url: "",
+			provider: "fetch",
+			parse: "html",
+		},
+		inputs: [],
+		outputs: [
+			{
+				id: OutputId.generate(),
+				label: "Output",
+				accessor: "web-page",
+			},
+		],
+	} satisfies WebPageNode;
 }

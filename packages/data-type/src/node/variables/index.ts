@@ -7,6 +7,7 @@ import {
 	VectorStoreContent,
 	VectorStoreContentReference,
 } from "./vector-store";
+import { WebPageContent, WebPageContentReference } from "./web-page";
 export * from "./file";
 export * from "./github";
 export * from "./text";
@@ -18,6 +19,7 @@ const VariableNodeContent = z.discriminatedUnion("type", [
 	FileContent,
 	GitHubContent,
 	VectorStoreContent,
+	WebPageContent,
 ]);
 
 export const VariableNode = NodeBase.extend({
@@ -34,6 +36,7 @@ export const VariableNodeLike = NodeBase.extend({
 			FileContent.shape.type,
 			GitHubContent.shape.type,
 			VectorStoreContent.shape.type,
+			WebPageContent.shape.type,
 		]),
 	}),
 });
@@ -69,6 +72,16 @@ export function isGitHubNode(args: unknown): args is GitHubNode {
 	return result.success;
 }
 
+export const WebPageNode = VariableNode.extend({
+	content: WebPageContent,
+});
+export type WebPageNode = z.infer<typeof WebPageNode>;
+
+export function isWebPageNode(args: unknown): args is WebPageNode {
+	const result = WebPageNode.safeParse(args);
+	return result.success;
+}
+
 export const VectorStoreNode = VariableNode.extend({
 	content: VectorStoreContent,
 });
@@ -99,6 +112,7 @@ const VariableNodeContentReference = z.discriminatedUnion("type", [
 	TextContentReference,
 	GitHubContentReference,
 	VectorStoreContentReference,
+	WebPageContentReference,
 ]);
 
 export const VariableNodeReference = NodeReferenceBase.extend({

@@ -75,7 +75,7 @@ export const FileData = z.union([
 ]);
 export type FileData = z.infer<typeof FileData>;
 
-export const FileCategory = z.enum(["pdf", "text", "image", "webPage"]);
+export const FileCategory = z.enum(["pdf", "text", "image"]);
 export type FileCategory = z.infer<typeof FileCategory>;
 export const FileContent = z.object({
 	type: z.literal("file"),

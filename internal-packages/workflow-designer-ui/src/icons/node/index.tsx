@@ -163,6 +163,8 @@ export function NodeIcon({
 							throw new Error(`Unhandled node type: ${_exhaustiveCheck}`);
 						}
 					}
+				case "webPage":
+					return <WebPageFileIcon {...props} data-content-type-icon />;
 				case "github":
 					return <GitHubIcon {...props} />;
 				case "vectorStore":

@@ -7,6 +7,7 @@ import {
 	isTextNode,
 	isTriggerNode,
 	isVectorStoreNode,
+	isWebPageNode,
 } from "@giselle-sdk/data-type";
 import clsx from "clsx/lite";
 import { useWorkflowDesigner } from "giselle-sdk/react";
@@ -19,6 +20,7 @@ import { TextGenerationNodePropertiesPanel } from "./text-generation-node-proper
 import { TextNodePropertiesPanel } from "./text-node-properties-panel";
 import { TriggerNodePropertiesPanel } from "./trigger-node-properties-panel";
 import { VectorStoreNodePropertiesPanel } from "./vector-store";
+import { WebPageNodePropertiesPanel } from "./web-page-node-properties-panel";
 
 export function PropertiesPanel() {
 	const { data } = useWorkflowDesigner();
@@ -53,6 +55,12 @@ export function PropertiesPanel() {
 				)}
 				{isFileNode(selectedNodes[0]) && (
 					<FileNodePropertiesPanel
+						node={selectedNodes[0]}
+						key={selectedNodes[0].id}
+					/>
+				)}
+				{isWebPageNode(selectedNodes[0]) && (
+					<WebPageNodePropertiesPanel
 						node={selectedNodes[0]}
 						key={selectedNodes[0].id}
 					/>
