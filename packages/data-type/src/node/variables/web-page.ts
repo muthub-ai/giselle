@@ -8,7 +8,7 @@ export type WebPageParseMethod = z.infer<typeof WebPageParseMethod>;
 
 export const WebPageContent = z.object({
 	type: z.literal("webPage"),
-	url: z.string().url(),
+	url: z.string(),
 	provider: WebPageProvider.default("fetch"),
 	parse: WebPageParseMethod.default("html"),
 	title: z.string().optional(),

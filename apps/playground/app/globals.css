@@ -53,6 +53,9 @@
 	--color-file-node-1: var(--color-chartreuse-900);
 	--color-file-node-2: hsl(69, 99%, 32%);
 
+	--color-webPage-node-1: var(--color-chartreuse-900);
+	--color-webPage-node-2: hsl(69, 99%, 32%);
+
 	--color-node-data-900: var(--color-chartreuse-900);
 	--color-node-plaintext-900: var(--color-turquoise-900);
 
