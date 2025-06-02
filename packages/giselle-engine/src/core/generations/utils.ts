@@ -26,6 +26,9 @@ import {
 	isJsonContent,
 	jsonContentToText,
 } from "@giselle-sdk/text-editor-utils";
+
+// Re-export for experimental usage
+export { isJsonContent, jsonContentToText };
 import type { CoreMessage, DataContent, FilePart, ImagePart } from "ai";
 import type { Storage } from "unstorage";
 import type { GiselleEngineContext } from "../types";
@@ -177,7 +180,7 @@ async function buildGenerationMessageForTextGeneration(
 						);
 						userMessage = userMessage.replace(
 							replaceKeyword,
-							getFilesDescription(attachedFiles.length, fileContents.length),
+							getFilesDescription(fileContents),
 						);
 
 						attachedFiles.push(...fileContents);
@@ -339,7 +342,7 @@ export async function getNodeGenerationIndexes(params: {
 	return NodeGenerationIndex.array().parse(unsafeNodeGenerationIndexData);
 }
 
-async function getFileContents(
+export async function getFileContents(
 	fileContent: FileContent,
 	fileResolver: (file: FileData) => Promise<DataContent>,
 ): Promise<(FilePart | ImagePart)[]> {
@@ -375,14 +378,14 @@ async function getFileContents(
 }
 
 // Helper function for generating the files description
-function getFilesDescription(
-	currentCount: number,
-	newFilesCount: number,
+export function getFilesDescription(
+	fileContents: FileContent[],
 ): string {
-	if (newFilesCount > 1) {
-		return `${getOrdinal(currentCount + 1)} ~ ${getOrdinal(currentCount + newFilesCount)} attached files`;
+	const totalFiles = fileContents.reduce((sum, content) => sum + content.files.length, 0);
+	if (totalFiles > 1) {
+		return `${totalFiles} attached files`;
 	}
-	return `${getOrdinal(currentCount + 1)} attached file`;
+	return `1 attached file`;
 }
 
 export async function getRedirectedUrlAndTitle(url: string) {
@@ -473,7 +476,7 @@ async function buildGenerationMessageForImageGeneration(
 						);
 						userMessage = userMessage.replace(
 							replaceKeyword,
-							getFilesDescription(attachedFiles.length, fileContents.length),
+							getFilesDescription(fileContents),
 						);
 
 						attachedFiles.push(...fileContents);
